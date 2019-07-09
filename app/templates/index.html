@@ -40,8 +40,8 @@
 		}
 
 		.small-box {
-			width: 100px;
-			height: 100px;
+			width: 200px;
+			height: 200px;
 			background: #7ce6df;
 			display: flex;
 			align-items: center;
@@ -61,7 +61,7 @@
 			<div class="col-12">
 				<h3>Task 4</h3>
 				<div class="box-container">
-					<div class="large-box">
+					<div class="large-box" id = "rotate-big">
 						<div class="small-box" id="rotate-box">Rotate</div>
 					</div>
 					<div class="large-box">
@@ -85,6 +85,63 @@
 	</div>
 	<script>
 	  // your solution here
+    
+    //Tap motion
+    var tapBox = document.getElementById('tap-box'); 
+    var mc = new Hammer(tapBox);
+    mc.on("tap", function(ev) {
+      tapBox.textContent = ev.type + " gesture detected.";
+    });
+    
+    // Pan motion
+    var panBox = document.getElementById('pan-box');
+    var mc = new Hammer(panBox);
+    mc.on("panright panleft panup pandown", function(ev){
+      panBox.textContent = ev.type + " gesture detected.";
+    });
+    
+    // Pinch motion
+    var pinchBox = document.getElementById('pinch-box');
+    var mc = new Hammer( pinchBox, { domEvents: true});
+    mc.get('pinch').set({enable: true});
+    mc.on("pinch", function (ev) {
+      pinchBox.textContent = ev.type + " gesture detected.";
+    });
+    
+    // Rotate motion
+    var rotateBox = document.getElementById('rotate-box');
+    var mc = new Hammer(rotateBox);
+    mc.get('rotate').set({enable: true });
+    mc.on("rotate", function(ev) {
+     rotateBox.textContent = ev.type + " gesture detected";
+      if(ev.type == "rotate"){
+        rotateBox.textContent = "Rotation by " + ev.rotation + " degrees.";
+        if(ev.rotation > 0) {
+          rotateBox.textContent = " Clockwise rotation detected";
+        }
+        else {
+          rotateBox.textContent = "Counterclockwise rotation detected";
+        }
+      }
+    });
+    
+    // Swipe motion
+    var swipeBox = document.getElementById('swipe-box');
+    var mc = new Hammer(swipeBox);
+    mc.on("swiperight swipeleft swipeup swipedown", function(ev) {
+      swipeBox.textContent = ev.type + " gesture detected";
+    });
+    
+    // Press motion
+    var pressBox = document.getElementById('press-box');
+    var mc = new Hammer(pressBox);
+    mc.get('press').set({enable: true});
+    mc.on("press", function(ev) {
+      pressBox.textContent = ev.type + " gesture detected";
+    });
+    
+    
+    
   </script>
 </body>
 </html>
